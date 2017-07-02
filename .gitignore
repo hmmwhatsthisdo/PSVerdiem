@@ -240,3 +240,8 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+
+## User-Specified Ignores
+# PS Test files, as those can/will come later
+**/*.tests.ps1
