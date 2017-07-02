@@ -1,24 +1,31 @@
 # Get all of the pub/priv scripts 
-$Script:Public = Get-ChildItem "$PSScriptRoot\Public\*.ps1" -ErrorAction SilentlyContinue
-$Script:Private = Get-ChildItem "$PSScriptRoot\Private\*.ps1" -ErrorAction SilentlyContinue
+$Scripts = @{
+	Public = Get-ChildItem "$PSScriptRoot\Public\*.ps1" -ErrorAction SilentlyContinue
+	Private = Get-ChildItem "$PSScriptRoot\Private\*.ps1" -ErrorAction SilentlyContinue
+}
 
 # Import them
-foreach ($Type in "Public","Private") {
+foreach ($Type in @("Public","Private")) {
 	Write-Verbose "Importing $Type functions..."
-	foreach ($ImportScript in (Get-Variable $Type -Scope Script -ValueOnly)) {
-		Write-Verbose "Importing function $($Import.Basename)..."
+	foreach ($ImportScript in $Scripts.$Type) {
+		Write-Verbose "Importing function $($ImportScript.Basename)..."
 		try {
-			. $Import.FullName
+			. $ImportScript.FullName
 		} 
 		catch {
-			Write-Error "Failed to import $type function $($import.BaseName): $_"
+			Write-Error "Failed to import $type function $($ImportScript.BaseName): $_"
 		}
 		
 	}
 }
 
 # Export our public functions, now that they exist
-$Script:Public | Foreach-Object BaseName | Export-ModuleMember
+
+$Scripts.Public | ForEach-Object BaseName | Export-ModuleMember
 
 # Now, get stored connection information if it's available
-$Script:Connection = Get-VerdiemStoredConnectionInfo
+try {
+	Get-VerdiemConnectionInfo -Scope User | Set-VerdiemConnectionInfo -Scope Session
+} catch {
+	Write-Warning "Unable to set default connection information. Use Set-VerdiemConnectionInfo to specify a server name and user credentials."
+}

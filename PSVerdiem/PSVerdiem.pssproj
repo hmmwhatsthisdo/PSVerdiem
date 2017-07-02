@@ -31,8 +31,10 @@
     <Folder Include="Private\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Private\Get-VerdiemStoredConnectionInfo.ps1" />
+    <Compile Include="Private\ConvertFrom-VerdiemJson.ps1" />
+    <Compile Include="Public\Get-VerdiemConnectionInfo.ps1" />
     <Compile Include="Private\Invoke-VerdiemWebRequest.ps1" />
+    <Compile Include="Public\Set-VerdiemConnectionInfo.ps1" />
     <Compile Include="PSVerdiem.psd1" />
     <Compile Include="PSVerdiem.psm1" />
     <Compile Include="PSVerdiem.tests.ps1" />
