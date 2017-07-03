@@ -33,25 +33,36 @@ Param (
 	# First, look for any __type fields in the JSON string and replace them.
 	$Data = $Data -creplace '"__type":','"__type__shifted":'
 
-	# Next, perform the conversion.
+	# Next, perform the conversion to JSON.
 	$Object = $Data | ConvertFrom-Json
 
+	# Recursively switch shifted __type fields back to their original names.
 	Function _RecursiveMemberRename {
 	Param(
 		$Object
 	)
-
+		# If the object has a type...
 		If ($Object.'__type__shifted') {
+
+			# Add a NoteProperty member with the original name/value.
 			$Object | Add-Member -MemberType NoteProperty -Name '__type' -Value $Object.'__type__shifted'
+
+			# Remove the old property.
 			$Object.PSObject.Properties.Remove("__type__shifted")
+
+			# Iterate over all NoteProperty members in this object (as the existence of the __type field indicates it was a container object)
 			$Object | Get-Member -MemberType NoteProperty | % {
 				$MemberName = $($_.Name)
+				
+				# Recurse onto those members.
 				_RecursiveMemberRename ($Object.$MemberName)
 			}
 		}
 	}
 
-	return _RecursiveMemberRename $Object
+	_RecursiveMemberRename $Object
+
+	return $Object
 
 
 }
