@@ -19,8 +19,10 @@ foreach ($Type in @("Public","Private")) {
 	}
 }
 
-# Export our public functions, now that they exist
+# Create a TypeResolver for Verdiem JSON types
+$Script:JSONTypeResolver = [PSVerdiem.StatefulTypeResolver]::new()
 
+# Export our public functions, now that they exist
 $Scripts.Public | ForEach-Object BaseName | Export-ModuleMember
 
 # Now, get stored connection information if it's available

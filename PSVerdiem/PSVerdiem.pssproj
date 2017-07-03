@@ -27,11 +27,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="Library\" />
     <Folder Include="Public\" />
     <Folder Include="Private\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Private\ConvertFrom-VerdiemJson.ps1" />
+    <Compile Include="Private\ConvertFrom-TypedJson.ps1" />
+    <Compile Include="Private\ConvertTo-TypedJson.ps1" />
     <Compile Include="Public\Get-VerdiemConnectionInfo.ps1" />
     <Compile Include="Private\Invoke-VerdiemWebRequest.ps1" />
     <Compile Include="Public\Set-VerdiemConnectionInfo.ps1" />
