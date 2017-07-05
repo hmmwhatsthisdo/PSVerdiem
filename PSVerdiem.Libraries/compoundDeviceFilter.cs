@@ -13,11 +13,12 @@ namespace PSVerdiem
             filters = new List<abstractDeviceFilter>();
         }
 
-        public compoundDeviceFilter(IEnumerable<abstractDeviceFilter> filters) {
+        public compoundDeviceFilter(IEnumerable<abstractDeviceFilter> filters, string @operator) {
             if (filters.Count() <= 1) {
                 throw new ArgumentException("Compound device filters require at least 2 subfilters.");
             }
             this.filters = new List<abstractDeviceFilter>(filters);
+            this.@operator = @operator;
         }
     }
 }
