@@ -14,6 +14,9 @@ namespace PSVerdiem
         }
 
         public compoundDeviceFilter(IEnumerable<abstractDeviceFilter> filters) {
+            if (filters.Count() <= 1) {
+                throw new ArgumentException("Compound device filters require at least 2 subfilters.");
+            }
             this.filters = new List<abstractDeviceFilter>(filters);
         }
     }
