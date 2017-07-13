@@ -21,7 +21,9 @@ Param (
 		ParameterSetName = "Attribute"
 	)]
 	[ValidateSet(
-		"Contains"
+		"Contains",
+		"Equal",
+		"NotEqual"
 	)]
 	[String]$CompareOperator,
 
