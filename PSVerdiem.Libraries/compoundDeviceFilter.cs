@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PSVerdiem
 {
+    [Serializable()]
     public class compoundDeviceFilter : abstractDeviceFilter
     {
         public List<abstractDeviceFilter> filters;
