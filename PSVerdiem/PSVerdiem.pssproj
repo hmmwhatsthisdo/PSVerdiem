@@ -34,8 +34,11 @@
   <ItemGroup>
     <Compile Include="Private\ConvertFrom-TypedJson.ps1" />
     <Compile Include="Private\ConvertTo-TypedJson.ps1" />
+    <Compile Include="Private\New-VerdiemDefaultFilter.ps1" />
+    <Compile Include="Public\Find-VerdiemDevice.ps1" />
     <Compile Include="Public\Get-VerdiemConnectionInfo.ps1" />
     <Compile Include="Private\Invoke-VerdiemWebRequest.ps1" />
+    <Compile Include="Public\New-VerdiemFilter.ps1" />
     <Compile Include="Public\Set-VerdiemConnectionInfo.ps1" />
     <Compile Include="PSVerdiem.psd1" />
     <Compile Include="PSVerdiem.psm1" />
