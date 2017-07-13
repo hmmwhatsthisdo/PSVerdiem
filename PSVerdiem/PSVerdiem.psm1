@@ -19,11 +19,21 @@ foreach ($Type in @("Public","Private")) {
 	}
 }
 
+Write-Verbose "Importing Libraries..."
+foreach ($Library in (Get-Childitem "$PSScriptRoot\Library\*.dll")) {
+	Write-Verbose "Importing $($Library.Basename)..."
+	try {
+		Add-Type -Path $Library.Fullname
+	} catch {
+		Write-Error "Failed to import DLL $($Library.BaseName): $_"
+	}
+}
+
 # Create a TypeResolver for Verdiem JSON types
 $Script:JSONTypeResolver = [PSVerdiem.StatefulTypeResolver]::new()
 
 # Export our public functions, now that they exist
-$Scripts.Public | ForEach-Object BaseName | Export-ModuleMember
+$Scripts.Public | ForEach-Object BaseName | Export-ModuleMember 
 
 # Now, get stored connection information if it's available
 try {
