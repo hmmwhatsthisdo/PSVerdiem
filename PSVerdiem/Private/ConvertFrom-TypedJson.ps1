@@ -14,10 +14,10 @@ Param(
 	[String]$InputObject,
 
 	[ValidateNotNull()]
-	[System.Web.Script.Serialization.JavaScriptTypeResolver]$TypeResolver = [System.Web.Script.Serialization.SimpleTypeResolver]::new()
+	[System.Web.Script.Serialization.JavaScriptTypeResolver]$TypeResolver = $(If ($Script:JSONTypeResolver) {$Script:JSONTypeResolver} Else {[System.Web.Script.Serialization.SimpleTypeResolver]::new()})
 )
 
-	$Serializer = [System.Web.Script.Serialization.JavaScriptSerializer]::new($resolver)
+	$Serializer = [System.Web.Script.Serialization.JavaScriptSerializer]::new($TypeResolver)
 
 	$Serializer.MaxJsonLength = [int32]::MaxValue
 	$Serializer.RecursionLimit = 102 # PoSH max depth + 2, according to PowerShell's github
